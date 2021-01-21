@@ -10,7 +10,6 @@ import re
 from emoji import EMOJI_ALIAS_UNICODE as emojis
 import os
 
-
 # logger
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
