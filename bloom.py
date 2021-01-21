@@ -8,6 +8,8 @@ from datetime import datetime
 from collections import defaultdict
 import re
 from emoji import EMOJI_ALIAS_UNICODE as emojis
+import os
+
 
 # logger
 logger = logging.getLogger('discord')
@@ -17,7 +19,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 # bot token
-token = 'ODAxNTcxNjUxMTY2MTQyNDg0.YAinxg.aQC7FxXd_-q_jswrNv7F8_TTg6c'
+token = os.getenv("DISCORD_BOT_TOKEN")
 
 sessions = defaultdict(lambda: defaultdict(list))
 
