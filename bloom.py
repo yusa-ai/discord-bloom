@@ -14,7 +14,7 @@ token = os.getenv("DISCORD_BOT_TOKEN")
 
 sessions = defaultdict(lambda: defaultdict(list))
 
-bloom = commands.Bot(command_prefix='$', help_command=None)
+bloom = commands.Bot(command_prefix='&', help_command=None)
 
 async def send_sessions():
     current_day = datetime.today().weekday()
@@ -40,7 +40,7 @@ async def send_sessions():
 
 @bloom.event
 async def on_ready():
-    await bloom.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='les prochains cours ($help)'))
+    await bloom.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='les prochains cours (&help)'))
     print('BLOOM initialisé')
     schedule.every(3).seconds.do(send_sessions)
     while True:
@@ -52,10 +52,10 @@ async def help(ctx):
     emb = discord.Embed(title='Aide', description='Liste des commandes de Bloom', color=0xf4abba)
     emb.set_thumbnail(url='https://ryanmalonzo.fr/chbsm.png')
     # cours
-    emb.add_field(name='$cours', value='Ajoute un cours récurrent\nFormat : `$cours <nom_cours> <jour> <heure> [lien] [rôle]`', inline=True)
-    emb.add_field(name='Exemple :', value='`$cours BPO lundi 14h00 https://zoom.us/ @101`')
+    emb.add_field(name='&cours', value='Ajoute un cours récurrent\nFormat : `&cours <nom_cours> <jour> <heure> [lien] [rôle]`', inline=True)
+    emb.add_field(name='Exemple :', value='`&cours "BPO Amphi" lundi 14h00 https://zoom.us/... @101`')
     #aide
-    emb.add_field(name='$help', value='Affiche cette aide', inline=False)
+    emb.add_field(name='&help', value='Affiche cette aide', inline=False)
 
     emb.set_footer(text=u'\u00A9'+' Ryan Malonzo')
     await ctx.send(embed=emb)
