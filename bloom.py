@@ -1,23 +1,15 @@
-import discord
-from discord.utils import get
-from discord.ext import commands
-import logging
 import asyncio
-import aioschedule as schedule
-from datetime import datetime
-from collections import defaultdict
-import re
-from emoji import EMOJI_ALIAS_UNICODE as emojis
 import os
+import re
+from collections import defaultdict
+from datetime import datetime
 
-# logger
-logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='bloom.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+import aioschedule as schedule
+import discord
+from discord.ext import commands
+from discord.utils import get
+from emoji import EMOJI_ALIAS_UNICODE as emojis
 
-# bot token
 token = os.getenv("DISCORD_BOT_TOKEN")
 
 sessions = defaultdict(lambda: defaultdict(list))
@@ -86,7 +78,7 @@ async def cours(ctx, name, day, time, link=None, role=None):
         await ctx.send(embed=emb)
     else:
         day = days[day]
-    if len(time) == 5 and re.match(r'\d{2}\h\d{2}', time):
+    if len(time) == 5 and re.match(r'\d{2}h\d{2}', time):
         channel = ctx.channel.id
         session = [False, (role, name, link, channel)]
         sessions[day][time].append(session)
