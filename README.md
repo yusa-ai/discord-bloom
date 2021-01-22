@@ -1,2 +1,2 @@
 # discord-bloom
-A Discord bot made with discord.py that sends links to (online) classes right when they start.
+A Discord bot made in Python using discord.py that sends alerts for (recurrent), (online) classes when they are about to start.
