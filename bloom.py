@@ -6,9 +6,11 @@ from datetime import datetime
 
 import aioschedule as schedule
 import discord
+import pytz
 from discord.ext import commands
 from discord.utils import get
 from emoji import EMOJI_ALIAS_UNICODE as emojis
+from pytz import timezone
 
 token = os.getenv("DISCORD_BOT_TOKEN")
 
@@ -16,9 +18,11 @@ sessions = defaultdict(lambda: defaultdict(list))
 
 bloom = commands.Bot(command_prefix='&', help_command=None)
 
+CET = timezone('Europe/Paris')
+
 async def send_sessions():
-    current_day = datetime.today().weekday()
-    current_time = datetime.now().strftime('%Hh%M')
+    current_day = datetime.now(CET).weekday()
+    current_time = datetime.now(CET).strftime('%Hh%M')
     for i, session in enumerate(sessions[current_day][current_time]):
         if not session[0]:
             channel = bloom.get_channel(session[1][3])
