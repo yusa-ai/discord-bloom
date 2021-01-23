@@ -79,7 +79,7 @@ async def help(ctx):
 async def cours(ctx, name, day, time, link=None, role=None):
     if day.lower() not in days:
         emb = discord.Embed(title='Erreur', description=f'{ctx.author.mention} Le jour entré est-il bien en lettres (ex : lundi) ?', color=0xf4abba)
-        await ctx.send(embed=emb)
+        msg = await ctx.send(embed=emb)
     else:
         day = days[day]
     if len(time) == 5 and re.match(r'\d{2}h\d{2}', time):
@@ -88,11 +88,11 @@ async def cours(ctx, name, day, time, link=None, role=None):
         sessions[day][time].append(session)
 
         emb = discord.Embed(title=emojis[':white_check_mark:']+' Nouveau cours ajouté', color=0xf4abba)
-        await ctx.send(embed=emb)
+        msg = await ctx.send(embed=emb)
         print(f'Nouvelle session : {name} {day} {time} {link} {role} {channel}')
     else:
         emb = discord.Embed(title='Erreur', description=f'{ctx.author.mention} L\'horaire entré doit suivre le format "HHhMM".', color=0xf4abba)
-        await ctx.send(embed=emb)
+        msg = await ctx.send(embed=emb)
 
     # wait 10s before cleaning up
     await asyncio.sleep(10)
