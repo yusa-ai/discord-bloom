@@ -20,6 +20,16 @@ bloom = commands.Bot(command_prefix='&', help_command=None)
 
 CET = timezone('Europe/Paris')
 
+days = {
+        'lundi': 0,
+        'mardi': 1,
+        'mercredi': 2,
+        'jeudi': 3,
+        'vendredi': 4,
+        'samedi': 5,
+        'dimanche': 6
+    }
+
 async def send_sessions():
     current_day = datetime.now(CET).weekday()
     current_time = datetime.now(CET).strftime('%Hh%M')
@@ -36,6 +46,7 @@ async def send_sessions():
                     emb.add_field(name='Plateforme :', value=f'{session[1][2]}', inline=False)
 
                 await channel.send(embed=emb)
+                print(f'Envoi : {session[1][1]} {session[1][2]} {session[1][0]} {session[1][3]}')
                 session[0] = True
             else:
                 sessions[current_day][current_time].pop(i)
@@ -66,17 +77,6 @@ async def help(ctx):
 
 @bloom.command()
 async def cours(ctx, name, day, time, link=None, role=None):
-    
-    days = {
-        'lundi': 0,
-        'mardi': 1,
-        'mercredi': 2,
-        'jeudi': 3,
-        'vendredi': 4,
-        'samedi': 5,
-        'dimanche': 6
-    }
-
     if day.lower() not in days:
         emb = discord.Embed(title='Erreur', description=f'{ctx.author.mention} Le jour entré est-il bien en lettres (ex : lundi) ?', color=0xf4abba)
         await ctx.send(embed=emb)
@@ -89,13 +89,14 @@ async def cours(ctx, name, day, time, link=None, role=None):
 
         emb = discord.Embed(title=emojis[':white_check_mark:']+' Nouveau cours ajouté', color=0xf4abba)
         await ctx.send(embed=emb)
-        print(f'{name} {day} {time} {link} {role} {channel}')
+        print(f'Nouvelle session : {name} {day} {time} {link} {role} {channel}')
     else:
         emb = discord.Embed(title='Erreur', description=f'{ctx.author.mention} L\'horaire entré doit suivre le format "HHhMM".', color=0xf4abba)
         await ctx.send(embed=emb)
 
-    #await asyncio.sleep(3)
-    #await ctx.message.delete()
-    #await msg.delete()
+    # wait 10s before cleaning up
+    await asyncio.sleep(10)
+    await ctx.message.delete()
+    await msg.delete()
 
 bloom.run(token)
