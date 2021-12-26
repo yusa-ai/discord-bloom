@@ -1,4 +1,4 @@
-# discord-bloom
+# Bloom 🌸
 
 A Discord bot made in Python using discord.py that can be configured to send reminders at a given date and time.  
 Its original purpose was to send links to online classes during the global COVID crisis.
